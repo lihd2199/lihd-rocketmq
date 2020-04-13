@@ -3,6 +3,7 @@ package com.lihd.rocketmq;
 import com.lihd.rocketmq.producer.ProducerAsync;
 import com.lihd.rocketmq.producer.ProducerMessageQueueSelector;
 import com.lihd.rocketmq.producer.ProducerSync;
+import com.lihd.rocketmq.producer.ProducerTransaction;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.remoting.exception.RemotingException;
@@ -44,6 +45,16 @@ public class ProducerTest {
         ProducerMessageQueueSelector producerMessageQueueSelector = new ProducerMessageQueueSelector();
 
         producerMessageQueueSelector.producerMessageQueueSelector();
+
+    }
+
+
+    @Test
+    public void testTransaction() throws MQClientException, InterruptedException {
+
+        ProducerTransaction producerTransaction = new ProducerTransaction();
+
+        producerTransaction.producerTransaction();
 
     }
 

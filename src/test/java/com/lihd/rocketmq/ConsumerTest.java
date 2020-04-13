@@ -16,6 +16,7 @@ public class ConsumerTest {
     public void test() throws MQClientException, InterruptedException {
 
         Consumer consumer = new Consumer();
+
         consumer.customer();
 
     }

@@ -8,9 +8,8 @@ import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -34,20 +33,14 @@ public class Consumer {
         consumer.subscribe("topic_example_java", "*");
 
         //注册消息监听器
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext context) {
-                //默认 list 里只有一条消息，可以通过设置参数来批量接收消息
-                if (list != null) {
-                    for (MessageExt ext : list) {
-                        try {
-                            System.out.println(new Date() + new String(ext.getBody(), "UTF-8"));
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                    }
+        consumer.registerMessageListener((MessageListenerConcurrently) (list, context) -> {
+            //默认 list 里只有一条消息，可以通过设置参数来批量接收消息
+            if (list != null) {
+                for (MessageExt ext : list) {
+                    System.out.println(new Date() + new String(ext.getBody(), StandardCharsets.UTF_8));
                 }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
+            return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         });
 
         // 消费者对象在使用之前必须要调用 start 初始化
