@@ -19,6 +19,7 @@ import java.util.concurrent.CountDownLatch;
  **/
 public class Consumer {
 
+
     public void customer() throws MQClientException, InterruptedException {
 
         //创建一个消息消费者，并设置一个消息消费者组
